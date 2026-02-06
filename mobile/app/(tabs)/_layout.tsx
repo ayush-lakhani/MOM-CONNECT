@@ -30,14 +30,6 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="community"
-        options={{
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'people' : 'people-outline'} size={28} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="marketplace"
         options={{
           tabBarIcon: ({ color, focused }) => (
@@ -46,11 +38,20 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="dashboard"
+        name="profile"
         options={{
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'person' : 'person-outline'} size={28} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="sell"
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'add-circle' : 'add-circle-outline'} size={32} color={color} />
+          ),
+          tabBarLabel: 'Sell',
         }}
       />
     </Tabs>

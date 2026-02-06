@@ -71,3 +71,35 @@ exports.commentPost = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+// Save/Unsave a post
+exports.savePost = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const postId = req.params.id;
+
+    if (user.savedPosts.includes(postId)) {
+      await user.updateOne({ $pull: { savedPosts: postId } });
+      res.status(200).json({ message: 'Post unsaved', isSaved: false });
+    } else {
+      await user.updateOne({ $push: { savedPosts: postId } });
+      res.status(200).json({ message: 'Post saved', isSaved: true });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Get saved posts
+exports.getSavedPosts = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).populate({
+      path: 'savedPosts',
+      populate: { path: 'user', select: 'name profileImage' }
+    });
+    res.status(200).json(user.savedPosts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

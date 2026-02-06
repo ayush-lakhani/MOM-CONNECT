@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema(
     totalViews: { type: Number, default: 0 },
     postsCount: { type: Number, default: 0 },
     productsCount: { type: Number, default: 0 },
+    savedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    bio: { type: String, default: 'Super Mom' },
+    followers: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
@@ -41,5 +44,10 @@ userSchema.methods.toJSON = function () {
   delete obj.password;
   return obj;
 };
+
+// Indexes
+userSchema.index({ email: 1 });
+userSchema.index({ phone: 1 });
+userSchema.index({ isCreator: 1 });
 
 module.exports = mongoose.model('User', userSchema);

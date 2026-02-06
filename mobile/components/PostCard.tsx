@@ -14,9 +14,13 @@ interface PostCardProps {
     comments: number;
     onLike: () => void;
     onComment: () => void;
+    onShare?: () => void;
+    isSaved?: boolean;
+    onSave?: () => void;
+    isLiked?: boolean;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ user, content, image, likes, comments, onLike, onComment }) => {
+const PostCard: React.FC<PostCardProps> = ({ user, content, image, likes, comments, onLike, onComment, onShare, isSaved, onSave, isLiked }) => {
     return (
         <View style={styles.card}>
             <View style={styles.header}>
@@ -36,17 +40,17 @@ const PostCard: React.FC<PostCardProps> = ({ user, content, image, likes, commen
                 <View style={styles.actions}>
                     <View style={styles.leftActions}>
                         <TouchableOpacity onPress={onLike} style={styles.actionIcon}>
-                            <Ionicons name="heart-outline" size={28} color={Colors.textDark} />
+                            <Ionicons name={isLiked ? "heart" : "heart-outline"} size={28} color={isLiked ? Colors.danger : Colors.textDark} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={onComment} style={styles.actionIcon}>
                             <Ionicons name="chatbubble-outline" size={26} color={Colors.textDark} />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.actionIcon}>
+                        <TouchableOpacity onPress={onShare} style={styles.actionIcon}>
                             <Ionicons name="paper-plane-outline" size={26} color={Colors.textDark} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
-                        <Ionicons name="bookmark-outline" size={26} color={Colors.textDark} />
+                    <TouchableOpacity onPress={onSave}>
+                        <Ionicons name={isSaved ? "bookmark" : "bookmark-outline"} size={26} color={isSaved ? Colors.primary : Colors.textDark} />
                     </TouchableOpacity>
                 </View>
 

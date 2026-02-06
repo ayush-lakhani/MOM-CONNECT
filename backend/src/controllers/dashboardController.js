@@ -21,9 +21,24 @@ exports.getDashboard = async (req, res) => {
       ...user.toJSON(),
       postsCount,
       totalLikes,
+      posts: userPosts, // Return actual posts
       followers: 120, // Placeholder for now
       following: 45,  // Placeholder for now
     });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, bio, profileImage } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.userId,
+      { name, bio, profileImage },
+      { new: true }
+    ).select('-password');
+    res.json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

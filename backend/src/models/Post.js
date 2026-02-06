@@ -37,8 +37,17 @@ const postSchema = new mongoose.Schema(
         },
       },
     ],
+    category: {
+      type: String,
+      default: 'General',
+      index: true
+    }
   },
   { timestamps: true }
 );
+
+postSchema.index({ user: 1 });
+postSchema.index({ createdAt: -1 });
+postSchema.index({ category: 1 });
 
 module.exports = mongoose.model('Post', postSchema);

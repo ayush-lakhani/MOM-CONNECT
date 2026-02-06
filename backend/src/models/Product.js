@@ -19,9 +19,12 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    image: {
+    images: [{
       type: String,
       required: true,
+    }],
+    image: {
+      type: String, // Main thumbnail
     },
     category: {
       type: String,
@@ -34,5 +37,11 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Indexes
+productSchema.index({ seller: 1 });
+productSchema.index({ category: 1 });
+productSchema.index({ price: 1 });
+productSchema.index({ isSold: 1 });
 
 module.exports = mongoose.model('Product', productSchema);

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Href } from 'expo-router';
 import { AuthContext } from '../utils/AuthContext';
 import { COLORS } from '../constants/colors';
 import { STRINGS } from '../constants/strings';
@@ -16,7 +16,7 @@ export default function SideDrawer({ visible, onClose }: Props) {
 
   const go = (path: string) => {
     onClose();
-    setTimeout(() => router.push(path), 120);
+    setTimeout(() => router.push(path as Href), 120);
   };
 
   const handleLogout = async () => {
